@@ -14,3 +14,5 @@
 //= require jquery_ujs
 //= require tether.min.js
 //= require bootstrap.min.js
+//= require d3.v4.min.js
+//= require top.js
