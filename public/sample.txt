@@ -1,0 +1,5 @@
+S(NP(nam) VP(VB(hoc) NP(bai)))
+S(NP(nam) VP(VB(hoc) NP(bai) PP(IN(o) NP(truong))))
+S(NP(nam) VP(VB(hoc) PP(IN(o) NP(thanh_pho))))
+S(NP(CD(mot) NN(nguoi)) VP(VB(di) NP(IN(voi)) NP(CD(mot) NN(nguoi))))
+S(NP(NN(hoa) NN(chanh)) VP(VB(no) PP(IN(giua) NP(NN(vuon) NN(chanh)))))
