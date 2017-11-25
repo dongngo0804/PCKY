@@ -1,0 +1,18 @@
+<table class="table table-bordered">
+  <thead>
+    <td>#</td>
+    <td>Rule</td>
+    <td>Count</td>
+    <td>Frequency</td>
+  </thead>
+  <tbody>
+    <% rules.each.with_index(1) do |rule, index| %>
+      <tr>
+        <td><%= index %></td>
+        <td><%= rule.code %></td>
+        <td><%= rule.count %></td>
+        <td><%= "#{rule.count}/#{rule.total}" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

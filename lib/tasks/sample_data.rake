@@ -15,7 +15,6 @@ namespace :sample_data do
         code = "#{r.lhs.first} -> #{r.rhs.first} #{r.rhs.second.presence}".strip
         rule = Rule.find_or_initialize_by(code: code)
         rule.count += 1
-        binding.pry if r.rhs.join(' ') == 'VB NP NP'
         rule.left = r.lhs.join(' ')
         rule.right = r.rhs.join(' ')
         rule.save!

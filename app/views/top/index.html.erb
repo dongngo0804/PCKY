@@ -1,3 +1,19 @@
-<div style="margin-top: 10px"><textarea id="cfg" rows="5" style="width: 600px"></textarea></div>
+<!-- <div style="margin-top: 10px"><textarea id="cfg" rows="5" style="width: 600px"></textarea></div>
 <button class="btn btn-default" id="btn-convert">Convert to tree</button>
-<div id="tree-display"><div>
+<div id="tree-display"><div> -->
+<div class="contianer-fluid">
+  <div class="row">
+  <div class="col-8">
+    <%= form_tag ajax_add_rule_path, remote: true do %>
+    <div class="form-group">
+      <%= label_tag :cnf %>
+      <%= text_area_tag :cnf, nil, class: 'form-control' %>
+    </div>
+      <%= submit_tag 'Add', class: 'btn btn-info' %>
+    <% end %>
+  </div>
+  <div class="col-4 list-rules">
+    <%= render partial: "rules", locals: {rules: @rules} %>
+  </div>
+  </div>
+</div>
