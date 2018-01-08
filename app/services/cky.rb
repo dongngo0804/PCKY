@@ -1,27 +1,32 @@
 class Cky
-  def initialize(Rules, log, model)
-    self.@Rules = Rules
-    self.@log = log
-    self.@model = model
+  attr_accessor :words, :table
+
+  def initialize(sentence)
+    @words = sentence.strip.split(' ')
+    @table = Array.new(@words.length){ Array.new(@words.length + 1, Cell.new) }
+    add_words_to_table
   end
 
-  def find_str_AinB(key, i, j)
-    result = []
-    Rules.each do |rule| #chua hieu lam
-      result.push(rule.left) if rule.right == key
+  def add_words_to_table
+    for i in 1..@words.length do
+      c = Cell.new
+      r = Rule.find_by_right(@words[i-1])
+      c.add(r.left)
+      @table[i-1][i] = c
     end
-    result
   end
 
-  def add_to_cell(cell1, cell2)
-    result = []
-    for i in 0...cell1.size
-      for j in 0...cell2.size
-        found = find_str_AinB((cell1[i] + " " + cell2[j]).to_s, i , j)
-        result = result + found
+  def parse
+    (2..@words.length).each do |k|
+      (0..k-2).to_a.reverse.each do |r|
+        (1..k-1).each do |c|
+          puts "k = #{k}"
+          puts "(#{r},#{c}) + (#{c},#{k}) : #{(@table[r][c].contents)} + #{@table[c][k].contents}"
+          binding.pry
+          @table[r][k].add(Cell.trace(@table[r][c], @table[c][k]).contents)
+        end
       end
     end
-    result
   end
 
   def runCKY(table, table_row, table_col)
@@ -32,11 +37,15 @@ class Cky
           found = add_to_cell(table[row][col].contents, table[col][k].contents)
           table[row][k].contents.addAll(found);
           if !found.empty?
-              table[row][k].row = row;
+              table[row][k].row = row;l;
               table[row][k].col = k;
           end
         end
       end
     end
+  end
+
+  def pretty
+    @table.map { |t| t.map{ |a| a.contents.blank? ? nil : a.contents }}
   end
 end
