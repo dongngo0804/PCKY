@@ -3,7 +3,7 @@ class Cky
 
   def initialize(sentence)
     @words = sentence.strip.split(' ')
-    @table = Array.new(@words.length){ Array.new(@words.length + 1, Cell.new) }
+    @table = Array.new(@words.length){ Array.new(@words.length + 1){ Cell.new } }
     add_words_to_table
   end
 
