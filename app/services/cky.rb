@@ -11,7 +11,7 @@ class Cky
     for i in 1..@words.length do
       c = Cell.new
       r = Rule.find_by_right(@words[i-1])
-      c.add(r.left)
+      c.add(r)
       @table[i-1][i] = c
     end
   end
@@ -21,8 +21,7 @@ class Cky
       (0..k-2).to_a.reverse.each do |r|
         (1..k-1).each do |c|
           puts "k = #{k}"
-          puts "(#{r},#{c}) + (#{c},#{k}) : #{(@table[r][c].contents)} + #{@table[c][k].contents}"
-          binding.pry
+          puts "(#{r},#{c}) + (#{c},#{k}) : #{(@table[r][c].contents.map(&:left))} + #{@table[c][k].contents.map(&:left)}"
           @table[r][k].add(Cell.trace(@table[r][c], @table[c][k]).contents)
         end
       end
@@ -46,6 +45,6 @@ class Cky
   end
 
   def pretty
-    @table.map { |t| t.map{ |a| a.contents.blank? ? nil : a.contents }}
+    @table.map { |t| t.map{ |a| a.contents.blank? ? nil : a.contents.map(&:left) }}
   end
 end

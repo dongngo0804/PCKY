@@ -6,9 +6,9 @@ class Cell
     @contents = []
   end
 
-  def add(ter)
-    return if @contents.include? ter
-    @contents << ter
+  def add(rule)
+    return if @contents.include? rule
+    @contents << rule
     @contents.flatten!
   end
 
@@ -17,14 +17,14 @@ class Cell
 
     if cel1&.contents.blank?
       cel2.contents.each do |c2|
-        r = Rule.find_by_right(c2.strip)
+        r = Rule.find_by_right(c2.left)
         c.add(r.left) if r.present?
       end
     end
 
     if cel2&.contents.blank?
       cel1.contents.each do |c1|
-        r = Rule.find_by_right(c1.strip)
+        r = Rule.find_by_right(c1.left)
         c.add(r.left) if r.present?
       end
     end
@@ -32,8 +32,8 @@ class Cell
     if cel1&.contents.present? && cel2&.contents.present?
       cel1.contents.each do |c1|
         cel2.contents.each do |c2|
-          r = Rule.find_by_right("#{c1} #{c2}".strip)
-          c.add(r.left) if r.present?
+          r = Rule.find_by_right("#{c1.left} #{c2.left}".strip)
+          c.add(r) if r.present?
         end
       end
     end

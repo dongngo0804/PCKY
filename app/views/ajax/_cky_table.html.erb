@@ -1,0 +1,15 @@
+<table class="table-bordered">
+<tr>
+  <% words.each do |word| %>
+    <th> <%= word %> </th>
+  <% end %>
+</tr>
+<% cky.table.each_with_index do |r, index_r| %>
+  <tr>
+  <% r.each_with_index do |c, index_c| %>
+    <% next if index_c == 0 %>
+    <td> <%= c.contents.map(&:left) %></td>
+  <% end %>
+  <tr>
+<% end %>
+<table>

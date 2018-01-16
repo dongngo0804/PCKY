@@ -20,5 +20,12 @@ class AjaxController < ApplicationController
     end
   end
 
-  
-end 
+  def parse
+    return if params[:sentence].blank?
+    s = params[:sentence].strip
+    @words = s.split(' ')
+    @cky = Cky.new(s)
+    @cky.parse
+  end
+
+end
