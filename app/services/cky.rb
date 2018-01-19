@@ -24,29 +24,61 @@ class Cky
         (1..k-1).each do |c|
           puts "k = #{k}"
           puts "(#{r},#{c}) + (#{c},#{k}) : #{(@table[r][c].contents.map(&:left))} + #{@table[c][k].contents.map(&:left)}"
-          @table[r][k].add(Cell.trace(@table[r][c], @table[c][k]).contents)
+          ret = trace(r, c, k)
+          @table[r][k].add(ret.contents, ret.nodes)
         end
       end
     end
   end
 
-  def runCKY(table, table_row, table_col)
-    for k in 2..table_row
-      row = k -2
-      until row >= 0
-        for col in 1...k
-          found = add_to_cell(table[row][col].contents, table[col][k].contents)
-          table[row][k].contents.addAll(found);
-          if !found.empty?
-              table[row][k].row = row;l;
-              table[row][k].col = k;
-          end
+  def trace(r, c, k)
+    cel1 = @table[r][c]
+    cel2 = @table[c][k]
+    cell = Cell.new
+    if cel1&.contents.blank?
+      cel2.contents.each_with_index do |c2, index|
+        r = Rule.find_by_right(c2.left)
+        cell.add(r.left, Node.new(cel1.nodes[index], nil, r.left, nil)) if r.present?
+      end
+    end
+
+    if cel2&.contents.blank?
+      cel1.contents.each_with_index do |c1, index|
+        r = Rule.find_by_right(c1.left)
+        cell.add(r.left, Node.new(cel2.nodes[index], nil, r.left, nil)) if r.present?
+      end
+    end
+
+    if cel1&.contents.present? && cel2&.contents.present?
+      cel1.contents.each_with_index do |c1, index_1|
+        cel2.contents.each_with_index do |c2, index_2|
+          r = Rule.find_by_right("#{c1.left} #{c2.left}".strip)
+          cell.add(r, Node.new(cel1.nodes[index_1], cel2.nodes[index_2], r.left, nil)) if r.present?
         end
       end
     end
+
+    return cell
   end
 
   def pretty
     @table.map { |t| t.map{ |a| a.contents.blank? ? nil : a.contents.map(&:left) }}
+  end
+
+  def to_cnf
+    cnf = []
+    nodes = @table[0].last.nodes.select { |n| n.type == 'S' }
+    nodes.each do |node|
+      cnf << unfold(node)
+    end
+    return cnf
+  end
+
+  def unfold(node)
+    # Check for a terminal
+    if node.left.nil? and node.right.nil?
+        return "#{node.type}(#{node.word})"
+    end
+    return "#{node.type}(#{unfold(node.left)} #{unfold(node.right)})"
   end
 end
