@@ -1,5 +1,5 @@
 class Cky
-  attr_accessor :words, :table
+  attr_accessor :words, :table, :nodes
 
   def initialize(sentence)
     @words = sentence.strip.split(' ')
@@ -10,8 +10,10 @@ class Cky
   def add_words_to_table
     for i in 1..@words.length do
       c = Cell.new
-      r = Rule.find_by_right(@words[i-1])
-      c.add(r)
+      rules = Rule.where(right: @words[i-1])
+      rules.each do |rule|
+        c.add(rule, Node.new(nil, nil, rule.left, @words[i-1]))
+      end
       @table[i-1][i] = c
     end
   end

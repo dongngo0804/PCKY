@@ -4,11 +4,13 @@ class Cell
     @row = -1
     @col = -1
     @contents = []
+    @nodes = []
   end
 
-  def add(rule)
+  def add(rule, node)
     return if @contents.include? rule
     @contents << rule
+    @nodes << node
     @contents.flatten!
   end
 
