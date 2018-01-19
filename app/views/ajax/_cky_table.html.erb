@@ -8,8 +8,13 @@
   <tr>
   <% r.each_with_index do |c, index_c| %>
     <% next if index_c == 0 %>
-    <td> <%= c.contents.map(&:left) %></td>
+    <td> <%= c.contents.map {|r| "#{r.left}(#{r.freq})"} %></td>
   <% end %>
   <tr>
 <% end %>
 <table>
+
+<p> CNF result: </p>
+<% cky.to_cnf.each_with_index do |cnf, index| %>
+  <p> <%= "#{index + 1}: #{cnf}" %> </p>
+<% end %>
