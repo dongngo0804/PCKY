@@ -14,3 +14,37 @@
  *= require bootstrap.min.css
  *= require top.scss
  */
+
+.container-fluid {
+  .row {
+    margin: 40px;
+    .form-group {
+      input {
+        resize: none;
+        border-radius: 0;
+        margin-bottom: 10px;
+      }
+    }
+
+    form {
+      margin-bottom: 75px;
+      input {
+        float: right;
+      }
+    }
+
+    table {
+      &.pcky {
+        width: auto;
+      }
+      thead {
+        background-color: #5BC0DE;
+        color: white;
+      }
+    }
+
+    .cky-table {
+      padding-top: 30px;
+    }
+  }
+}
