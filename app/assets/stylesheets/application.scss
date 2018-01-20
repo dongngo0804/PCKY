@@ -45,11 +45,24 @@
 
     .cky-table {
       padding-top: 30px;
+      #btn-convert {
+        float: right;
+      }
     }
   }
 
   .center {
     text-align: center;
+  }
+
+  #tree-display {
+    svg {
+      width: 797px !important;
+      height: 600px !important;
+      g {
+        width: 900px;
+      }
+    }
   }
 }
 footer {
