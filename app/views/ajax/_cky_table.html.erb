@@ -1,4 +1,4 @@
-<table class="table table-striped pcky">
+<table class="table table-bordered table-striped pcky">
 <tr>
   <% words.each do |word| %>
     <th> <%= word %> </th>
@@ -8,7 +8,7 @@
   <tr>
   <% r.each_with_index do |c, index_c| %>
     <% next if index_c == 0 %>
-    <td> <%= c.contents.map {|r| "#{r.left}(#{r.freq})"} %></td>
+    <td> <%= c.contents.map {|r| "#{r.left}(#{r.freq})"}.join(',') %></td>
   <% end %>
   <tr>
 <% end %>
