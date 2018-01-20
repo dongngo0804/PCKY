@@ -1,18 +1,11 @@
-$(function() {
-	$('#btn-convert').click(function(){
-		convert_json_to_tree();
-	})
-})
-function convert_json_to_tree(){
-	cfg = $('#cfg').val();
-	json_data = JSON.parse(cfg);
+function convert_json_to_tree(cfg){
+	json_data = cfg;
 
-	console.log(cfg);
 	//  Generate the tree diagram	 *****************
 	var margin = {top: 20, right: 120, bottom: 20, left: 120},
 		  width = 960 - margin.right - margin.left,
 		  height = 500 - margin.top - margin.bottom;
-		
+
 	var i = 0;
 
 	var tree = d3.layout.tree()
@@ -48,7 +41,7 @@ function convert_json_to_tree(){
 	  // Enter the nodes.
 	  var nodeEnter = node.enter().append("g")
 		  .attr("class", "node")
-		  .attr("transform", function(d) { 
+		  .attr("transform", function(d) {
 			  return "translate(" + d.x + "," + d.y + ")"; });
 
 	  nodeEnter.append("circle")
@@ -56,10 +49,10 @@ function convert_json_to_tree(){
 		  .style("fill", "#fff");
 
 	  nodeEnter.append("text")
-		  .attr("x", function(d) { 
+		  .attr("x", function(d) {
 			  return d.children || d._children ? -13 : 13; })
 		  .attr("dy", ".35em")
-		  .attr("text-anchor", function(d) { 
+		  .attr("text-anchor", function(d) {
 			  return d.children || d._children ? "end" : "start"; })
 		  .text(function(d) { return d.name; })
 		  .style("fill-opacity", 1);
@@ -74,4 +67,3 @@ function convert_json_to_tree(){
 		  .attr("d", diagonal);
   }
 }
-
