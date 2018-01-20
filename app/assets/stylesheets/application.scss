@@ -14,3 +14,58 @@
  *= require bootstrap.min.css
  *= require top.scss
  */
+
+.container-fluid {
+  .row {
+    margin: 40px;
+    .form-group {
+      input {
+        resize: none;
+        border-radius: 0;
+        margin-bottom: 10px;
+      }
+    }
+
+    form {
+      margin-bottom: 75px;
+      input {
+        float: right;
+      }
+    }
+
+    table {
+      &.pcky {
+        width: -webkit-fill-available;
+      }
+      thead {
+        background-color: #5BC0DE;
+        color: white;
+      }
+    }
+
+    .cky-table {
+      padding-top: 30px;
+    }
+  }
+
+  .center {
+    text-align: center;
+  }
+}
+footer {
+    background: url(/assets/footer_bg.jpg) no-repeat #010101;
+    min-height: 100px;
+    position: relative;
+    z-index: 1;
+    ul {
+      color: white;
+      margin-bottom: 0;
+      padding-top: 25px;
+      padding-left: 0px;
+      list-style: none;
+      letter-spacing: 0.5px;
+      li {
+        padding-bottom: 5px;
+      }
+    }
+}
