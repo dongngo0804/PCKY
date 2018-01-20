@@ -16,5 +16,5 @@
 
 <p> CNF result: </p>
 <% cky.to_cnf.each_with_index do |cnf, index| %>
-  <p> <%= "#{index + 1}: #{cnf}" %> </p>
+  <p> <%= "#{index + 1}: #{cnf.first} --> #{cnf.last}"%> </p>
 <% end %>

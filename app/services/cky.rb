@@ -12,7 +12,7 @@ class Cky
       c = Cell.new
       rules = Rule.where(right: @words[i-1])
       rules.each do |rule|
-        c.add(rule, Node.new(nil, nil, rule.left, @words[i-1]))
+        c.add(rule, Node.new(nil, nil, rule.left, @words[i-1], rule.freq))
       end
       @table[i-1][i] = c
     end
@@ -38,14 +38,14 @@ class Cky
     if cel1&.contents.blank?
       cel2.contents.each_with_index do |c2, index|
         r = Rule.find_by_right(c2.left)
-        cell.add(r.left, Node.new(cel1.nodes[index], nil, r.left, nil)) if r.present?
+        cell.add(r.left, Node.new(cel1.nodes[index], nil, r.left, nil, r.freq)) if r.present?
       end
     end
 
     if cel2&.contents.blank?
       cel1.contents.each_with_index do |c1, index|
         r = Rule.find_by_right(c1.left)
-        cell.add(r.left, Node.new(cel2.nodes[index], nil, r.left, nil)) if r.present?
+        cell.add(r.left, Node.new(cel2.nodes[index], nil, r.left, nil, r.freq)) if r.present?
       end
     end
 
@@ -53,7 +53,7 @@ class Cky
       cel1.contents.each_with_index do |c1, index_1|
         cel2.contents.each_with_index do |c2, index_2|
           r = Rule.find_by_right("#{c1.left} #{c2.left}".strip)
-          cell.add(r, Node.new(cel1.nodes[index_1], cel2.nodes[index_2], r.left, nil)) if r.present?
+          cell.add(r, Node.new(cel1.nodes[index_1], cel2.nodes[index_2], r.left, nil, r.freq)) if r.present?
         end
       end
     end
@@ -69,7 +69,7 @@ class Cky
     cnf = []
     nodes = @table[0].last.nodes.select { |n| n.type == 'S' }
     nodes.each do |node|
-      cnf << unfold(node)
+      cnf << [unfold(node), tree_freq(node).round(7)]
     end
     return cnf
   end
@@ -80,5 +80,12 @@ class Cky
         return "#{node.type}(#{node.word})"
     end
     return "#{node.type}(#{unfold(node.left)} #{unfold(node.right)})"
+  end
+
+  def tree_freq(node)
+    if node.left.nil? and node.right.nil?
+        return node.freq
+    end
+    return tree_freq(node.left) * tree_freq(node.right) * node.freq
   end
 end
