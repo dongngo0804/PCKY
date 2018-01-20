@@ -37,23 +37,29 @@ class Cky
     cell = Cell.new
     if cel1&.contents.blank?
       cel2.contents.each_with_index do |c2, index|
-        r = Rule.find_by_right(c2.left)
-        cell.add(r.left, Node.new(cel1.nodes[index], nil, r.left, nil, r.freq)) if r.present?
+        rules = Rule.where(right: c2.left)
+        rules.each do |r|
+          cell.add(r.left, Node.new(cel1.nodes[index], nil, r.left, nil, r.freq)) if r.present?
+        end
       end
     end
 
     if cel2&.contents.blank?
       cel1.contents.each_with_index do |c1, index|
-        r = Rule.find_by_right(c1.left)
-        cell.add(r.left, Node.new(cel2.nodes[index], nil, r.left, nil, r.freq)) if r.present?
+        rules = Rule.where(right: c1.left)
+        rules.each do |r|
+          cell.add(r.left, Node.new(cel2.nodes[index], nil, r.left, nil, r.freq)) if r.present?
+        end
       end
     end
 
     if cel1&.contents.present? && cel2&.contents.present?
       cel1.contents.each_with_index do |c1, index_1|
         cel2.contents.each_with_index do |c2, index_2|
-          r = Rule.find_by_right("#{c1.left} #{c2.left}".strip)
-          cell.add(r, Node.new(cel1.nodes[index_1], cel2.nodes[index_2], r.left, nil, r.freq)) if r.present?
+          rules = Rule.where(right: "#{c1.left} #{c2.left}".strip)
+          rules.each do |r|
+            cell.add(r, Node.new(cel1.nodes[index_1], cel2.nodes[index_2], r.left, nil, r.freq)) if r.present?
+          end
         end
       end
     end
