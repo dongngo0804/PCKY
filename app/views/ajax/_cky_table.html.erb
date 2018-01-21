@@ -17,7 +17,7 @@
 <p> CNF result: </p>
 <% cky.to_cnf.each_with_index do |cnf, index| %>
   <div class = "bnf-result">
-    <p> <%= "#{index + 1}: #{cnf.first} --> #{cnf.last}"%> </p>
+    <p> <%= markdown("`#{index + 1}: #{cnf.first} --> #{cnf.last}`")%> </p>
     <button class="btn btn-info" id="btn-convert" onclick="convert_json_to_tree(<%= cnf.first.convert_to_json %>)">Show tree</button>
   </div>
 <% end %>

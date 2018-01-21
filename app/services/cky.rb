@@ -75,13 +75,12 @@ class Cky
     cnf = []
     nodes = @table[0].last.nodes.select { |n| n.type == 'S' }
     nodes.each do |node|
-      cnf << [unfold(node), tree_freq(node).round(7)]
+      cnf << [unfold(node), tree_freq(node)]
     end
     return cnf
   end
 
   def unfold(node)
-    # Check for a terminal
     if node.left.nil? and node.right.nil?
         return "#{node.type}(#{node.word})"
     end
