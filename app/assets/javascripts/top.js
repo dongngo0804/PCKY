@@ -2,9 +2,9 @@ function convert_json_to_tree(cfg){
 	json_data = cfg;
 
 	//  Generate the tree diagram	 *****************
-	var margin = {top: 20, right: 120, bottom: 20, left: 120},
-		  width = 960 - margin.right - margin.left,
-		  height = 500 - margin.top - margin.bottom;
+	var margin = {top: 20, right: 10, bottom: 20, left: 10},
+		  width = 1000 - margin.right - margin.left,
+		  height = 800 - margin.top - margin.bottom;
 
 	var i = 0;
 
