@@ -8,7 +8,7 @@
   <tr>
   <% r.each_with_index do |c, index_c| %>
     <% next if index_c == 0 %>
-    <td> <%= c.contents.map {|r| "#{r.left}(#{r.freq})"}.join(',') %></td>
+    <td> <%= c.contents.map {|r| "#{r.left}(#{r.freq})"}.join(', ') %></td>
   <% end %>
   <tr>
 <% end %>
@@ -16,6 +16,8 @@
 
 <p> CNF result: </p>
 <% cky.to_cnf.each_with_index do |cnf, index| %>
-  <p> <%= "#{index + 1}: #{cnf.first} --> #{cnf.last}"%> </p>
-  <button class="btn btn-info" id="btn-convert" onclick="convert_json_to_tree(<%= cnf.first.convert_to_json %>)">Show tree</button>
+  <div class = "bnf-result">
+    <p> <%= "#{index + 1}: #{cnf.first} --> #{cnf.last}"%> </p>
+    <button class="btn btn-info" id="btn-convert" onclick="convert_json_to_tree(<%= cnf.first.convert_to_json %>)">Show tree</button>
+  </div>
 <% end %>
