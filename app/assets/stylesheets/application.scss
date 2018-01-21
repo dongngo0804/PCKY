@@ -41,12 +41,19 @@
         background-color: #5BC0DE;
         color: white;
       }
+      th, td {
+        max-width: 100px;
+      }
     }
 
     .cky-table {
       padding-top: 30px;
-      #btn-convert {
-        float: right;
+      .bnf-result {
+        margin-bottom: 60px;
+        #btn-convert {
+          float: right;
+          margin-top: -10px;
+        }
       }
     }
   }
